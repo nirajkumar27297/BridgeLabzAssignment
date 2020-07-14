@@ -1,50 +1,66 @@
+
+
+		
 import java.util.Random;
 
-class EmployeeWageComputation_UC_5 
-{
-	public void EmployeeCheck()
-	{
+//Employee Wage Computation class
+class EmployeeWageComputation_UC_5
+{   
+    private static final int wagePerHour=20;
+    private static int fullDayHour=0; 
+    private static double totalWage;	
+	private static final int numberOfDays=20;
+	public void employeeCheck()
+	
+	{   //Declaring Random Class
 		Random rand=new Random();
-		int IsPresent=rand.nextInt(3);
-		int WagePerHour=0;
-		int FullDayHour=0;
-		double TotalWage=0;
-		int numberOfDays=20;
-		
+		//Genertaing random number in range [0,2]
+		//1-Present
+		//2-PartTime
+		//0-Absent
+		//Looping for 20 days
+		double wage=0;
 		for(int i=0;i<20;i++)
 		{
-
-
-			switch(IsPresent)
+			
+			final int ISPRESENT=rand.nextInt(3);
+			
+			
+			switch(ISPRESENT)
 			{
 				case 1:
-							 WagePerHour=20;
-								FullDayHour=8;
+							
+							
+								fullDayHour=8;
 								break;
 
 			case 2:
 			
-						WagePerHour=20;
-							FullDayHour=4;
+						
+						
+							fullDayHour=4;
 							break;
 			case 0:
-                        WagePerHour=0;
-				        FullDayHour=0;
 
+						
 						break;
 			default:
 						System.out.println("Invalid Value");
 				
 			}
-			double Wage=EmployeeWageComputation_UC_5.DailyWageCalculation(WagePerHour,FullDayHour);
-			TotalWage+=Wage;
+			//@return WagePerHour*FullDayHour
+			//@params FullDayHour
+			//Calculating totalWage 
+			wage=EmployeeWageComputation_UC_5.dailyWageCalculation(fullDayHour);
+			totalWage+=wage;
+				
 		}
-			System.out.println("The total wage of the Person is: "+TotalWage);
+		System.out.println("The wage of the Person is: "+totalWage);
 	}
-
-	public static double DailyWageCalculation(int WagePerHour,int FullDayHour)
-	{
-		return (WagePerHour*FullDayHour);
+     //Calling Function
+	public static double dailyWageCalculation(int fullDayHour)
+	{   //Returning Value 
+		return (wagePerHour*fullDayHour);
 	}
 
 
@@ -53,11 +69,12 @@ class EmployeeWageComputation_UC_5
 
 
 	public static void main(String[] args) 
-	{
+	
+	{   //creating call objects
 		EmployeeWageComputation_UC_5 e1 =new EmployeeWageComputation_UC_5();
-		e1.EmployeeCheck();
+		e1.employeeCheck();
 
 	}
 }
-
+		
 
