@@ -1,18 +1,21 @@
 import java.util.Random;
 
+//Employee Wage Computation class
 class EmployeeWageComputation_UC_2  
-{
-	public void EmployeeCheck()
-	{
+{   
+    private static final int wagePerHour=20;
+    private static int fullDayHour=0; 
+    private static double wage;	
+	public void employeeCheck()
+	{   //Declaring Random Class
 		Random rand=new Random();
-		int IsPresent=rand.nextInt(2);
-		int WagePerHour=0;
-		int FullDayHour=0;
-		if(IsPresent==1)
+		//Genertaing random number in range [0,1]
+		final int ISPRESENT=rand.nextInt(2);
+		
+		if(ISPRESENT==1)
 		{
 			System.out.println("Employee is Present");
-			 WagePerHour=20;
-				FullDayHour=8;
+				fullDayHour=8;
 
 		}
 		else
@@ -20,13 +23,16 @@ class EmployeeWageComputation_UC_2
 			System.out.println("Employee is Absent");
 			
 		}
-		double Wage=EmployeeWageComputation_UC_2.DailyWageCalculation(WagePerHour,FullDayHour);
-			System.out.println("The wage of the Person is: "+Wage);
+		//@return WagePerHour*FullDayHour
+		//@params FullDayHour
+		
+		wage=EmployeeWageComputation_UC_2.DailyWageCalculation(fullDayHour);
+			System.out.println("The wage of the Person is: "+wage);
 	}
-
-	public static double DailyWageCalculation(int WagePerHour,int FullDayHour)
-	{
-		return (WagePerHour*FullDayHour);
+     //Calling Function
+	public static double DailyWageCalculation(int fullDayHour)
+	{   //Returning Value 
+		return (wagePerHour*fullDayHour);
 	}
 
 
@@ -37,7 +43,7 @@ class EmployeeWageComputation_UC_2
 	public static void main(String[] args) 
 	{
 		EmployeeWageComputation_UC_2 e1 =new EmployeeWageComputation_UC_2();
-		e1.EmployeeCheck();
+		e1.employeeCheck();
 
 	}
 }
