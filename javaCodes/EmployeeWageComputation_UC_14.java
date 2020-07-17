@@ -1,7 +1,16 @@
 
+	
 
 		
-import java.util.Random;
+import java.util.*;
+
+//Interface IcomputeWage
+interface IComputeWage
+{
+	public void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours);
+	public void computeEmpWage();
+	public double getTotalWage(String company);
+}
 
 
 
@@ -28,6 +37,10 @@ class CompanyEmpWage
     {
     this.totalWage=totalWage;
     }
+    public double gettotalWage()
+    {
+    	return this.totalWage;
+    }
     @Override
 	public String toString()
 	{
@@ -51,27 +64,31 @@ class CompanyEmpWage
    
 
 
-public class EmployeeWageComputation_UC_10
+public class EmployeeWageComputation_UC_14 implements IComputeWage
 {   
    private static int numOfCompanies=0;
-   private CompanyEmpWage[] CompanyWageArray;
-	EmployeeWageComputation_UC_10()
+   private ArrayList<CompanyEmpWage> CompanyWageList;
+   private Map<String,CompanyEmpWage> companyToEmpWageMap;
+ 	EmployeeWageComputation_UC_14()
 	{
-	CompanyWageArray=new CompanyEmpWage[5];
+	CompanyWageList=new ArrayList<CompanyEmpWage>();
+	companyToEmpWageMap=new HashMap<String,CompanyEmpWage>();
 	}
-    public void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
+    public void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours)
     {
-    CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(Company,wagePerHour,numberOfDays,numberOfDays);
-	CompanyWageArray[numOfCompanies]=CompanyEmpWage_Obj;
+    CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(company,wagePerHour,numberOfDays,numberOfDays);
+	CompanyWageList.add(CompanyEmpWage_Obj);
     numOfCompanies++;
+    companyToEmpWageMap.put(company,CompanyEmpWage_Obj);
     }
     
     public void computeEmpWage()
     {
         for(int i=0;i<this.numOfCompanies;i++)
-        {   double totalWage=computeEmpWageHelper(CompanyWageArray[i]);
-            CompanyWageArray[i].settotalWage(totalWage);
-			System.out.println(CompanyWageArray[i]);
+		{	CompanyEmpWage CompanyEmpWage_Obj=CompanyWageList.get(i);
+         double totalWage=computeEmpWageHelper(CompanyEmpWage_Obj);
+            CompanyWageList.get(i).settotalWage(totalWage);
+			System.out.println(CompanyWageList.get(i));
         }
     }
     
@@ -86,8 +103,13 @@ public class EmployeeWageComputation_UC_10
 		double totalWage=0;
 		int day=0;
 		int fullDayHour=0;
+		double wage=0;
+		Map<Double, Double> total_dailyWage=new HashMap<Double, Double>();
+		
 		while(day<CompanyEmpWage_Obj.getnumberOfDays() && fullDayHour<=CompanyEmpWage_Obj.gettotalHours())
+			
 		{	
+			
 			final int ISPRESENT=rand.nextInt(3); 
 			
 			
@@ -111,21 +133,28 @@ public class EmployeeWageComputation_UC_10
 						break;
 			default:
 						System.out.println("Invalid Value");
-			day+=1;
-				
 			}
-		
 			
+			day+=1;
 			
-				
+			wage=CompanyEmpWage_Obj.getwagePerHour()*fullDayHour;
+			totalWage+=wage;
+			
+			total_dailyWage.put(wage,totalWage);
+							
 		}
 	
-		totalWage=CompanyEmpWage_Obj.getwagePerHour()*fullDayHour;
 		return totalWage;
 		
 		
 	}
 	
+	public double getTotalWage(String company)
+	
+	{
+		return companyToEmpWageMap.get(company).gettotalWage();
+		
+	}
 	
   
 
@@ -136,12 +165,14 @@ public class EmployeeWageComputation_UC_10
 	public static void main(String[] args) 
 	
 	{   //creating call objects
-		EmployeeWageComputation_UC_10 e1 =new EmployeeWageComputation_UC_10();
+		EmployeeWageComputation_UC_14 e1 =new EmployeeWageComputation_UC_14();
 		e1.addCompany("Reliance",30,30,120);
-		e1.addCompany("Dmart",20,40,100);
+		e1.addCompany("Dmart",20,50,100);
 		e1.computeEmpWage();
+		System.out.println("The Total Wage for Dmart Company is "+e1.getTotalWage("Dmart"));
 
 	}
 }
 		
+
 
