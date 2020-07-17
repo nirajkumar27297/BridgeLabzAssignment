@@ -2,7 +2,12 @@
 
 		
 import java.util.*;
-
+interface IComputeWage
+{
+	public void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours);
+	public void computeEmpWage();
+	
+}
 
 //Employee Wage Computation class
 
@@ -50,7 +55,7 @@ class CompanyEmpWage
    
 
 
-public class EmployeeWageComputation_UC_12
+public class EmployeeWageComputation_UC_12 implements IComputeWage
 {   
    private static int numOfCompanies=0;
    private ArrayList<CompanyEmpWage> CompanyWageList;
@@ -58,14 +63,14 @@ public class EmployeeWageComputation_UC_12
 	{
 	CompanyWageList=new ArrayList<CompanyEmpWage>();
 	}
-    private void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
+    public void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
     {
     CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(Company,wagePerHour,numberOfDays,numberOfDays);
 	CompanyWageList.add(CompanyEmpWage_Obj);
     numOfCompanies++;
     }
     
-    private void computeEmpWage()
+    public void computeEmpWage()
     {
         for(int i=0;i<this.numOfCompanies;i++)
 		{	CompanyEmpWage CompanyEmpWage_Obj=CompanyWageList.get(i);
@@ -87,7 +92,7 @@ public class EmployeeWageComputation_UC_12
 		int day=0;
 		int fullDayHour=0;
 		double wage=0;
-		Map<Double, Double> total_dailyWage=new HashMap<Double, Double>();
+		
 		
 		while(day<CompanyEmpWage_Obj.getnumberOfDays() && fullDayHour<=CompanyEmpWage_Obj.gettotalHours())
 			
@@ -120,10 +125,7 @@ public class EmployeeWageComputation_UC_12
 			
 			day+=1;
 			
-			wage=CompanyEmpWage_Obj.getwagePerHour()*fullDayHour;
-			totalWage+=wage;
 			
-			total_dailyWage.put(wage,totalWage);
 				
 			
 		
@@ -132,7 +134,7 @@ public class EmployeeWageComputation_UC_12
 				
 		}
 	
-		
+			totalWage=CompanyEmpWage_Obj.getwagePerHour()*fullDayHour;
 		return totalWage;
 		
 		

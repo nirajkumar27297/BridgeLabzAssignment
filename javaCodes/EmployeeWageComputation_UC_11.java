@@ -2,7 +2,13 @@
 
 		
 import java.util.Random;
-import java.util.ArrayList;
+//Interface 
+interface IComputeWage
+{
+	public void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours);
+	public void computeEmpWage();
+	
+}
 
 
 //Employee Wage Computation class
@@ -51,28 +57,27 @@ class CompanyEmpWage
    
 
 
-public class EmployeeWageComputation_UC_11
+public class EmployeeWageComputation_UC_11 implements IComputeWage
 {   
    private static int numOfCompanies=0;
-   private ArrayList<CompanyEmpWage> CompanyWageList;
+   private CompanyEmpWage[] CompanyWageArray;
 	EmployeeWageComputation_UC_11()
 	{
-	CompanyWageList=new ArrayList<CompanyEmpWage>();
+	CompanyWageArray=new CompanyEmpWage[5];
 	}
-    private void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
+    public void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
     {
     CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(Company,wagePerHour,numberOfDays,numberOfDays);
-	CompanyWageList.add(CompanyEmpWage_Obj);
+	CompanyWageArray[numOfCompanies]=CompanyEmpWage_Obj;
     numOfCompanies++;
     }
     
-    private void computeEmpWage()
+    public void computeEmpWage()
     {
         for(int i=0;i<this.numOfCompanies;i++)
-		{	CompanyEmpWage CompanyEmpWage_Obj=CompanyWageList.get(i);
-         double totalWage=computeEmpWageHelper(CompanyEmpWage_Obj);
-            CompanyWageList.get(i).settotalWage(totalWage);
-			System.out.println(CompanyWageList.get(i));
+        {   double totalWage=computeEmpWageHelper(CompanyWageArray[i]);
+            CompanyWageArray[i].settotalWage(totalWage);
+			System.out.println(CompanyWageArray[i]);
         }
     }
     
@@ -139,7 +144,7 @@ public class EmployeeWageComputation_UC_11
 	{   //creating call objects
 		EmployeeWageComputation_UC_11 e1 =new EmployeeWageComputation_UC_11();
 		e1.addCompany("Reliance",30,30,120);
-		e1.addCompany("Dmart",20,50,100);
+		e1.addCompany("Dmart",20,40,100);
 		e1.computeEmpWage();
 
 	}

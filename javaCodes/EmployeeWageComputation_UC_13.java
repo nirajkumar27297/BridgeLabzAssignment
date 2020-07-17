@@ -5,6 +5,12 @@ import java.util.*;
 
 
 //Employee Wage Computation class
+interface IComputeWage
+{
+	public void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours);
+	public void computeEmpWage();
+	
+}
 
 class CompanyEmpWage
 {
@@ -26,10 +32,6 @@ class CompanyEmpWage
     public void settotalWage(double totalWage)
     {
     this.totalWage=totalWage;
-    }
-    public double gettotalWage()
-    {
-    	return this.totalWage;
     }
     @Override
 	public String toString()
@@ -54,25 +56,22 @@ class CompanyEmpWage
    
 
 
-public class EmployeeWageComputation_UC_13
+public class EmployeeWageComputation_UC_13 implements IComputeWage
 {   
    private static int numOfCompanies=0;
    private ArrayList<CompanyEmpWage> CompanyWageList;
-   private Map<String,CompanyEmpWage> companyToEmpWageMap;
- 	EmployeeWageComputation_UC_13()
+	EmployeeWageComputation_UC_13()
 	{
 	CompanyWageList=new ArrayList<CompanyEmpWage>();
-	companyToEmpWageMap=new HashMap<String,CompanyEmpWage>();
 	}
-    private void addCompany(String company,final int wagePerHour,final int numberOfDays,final int totalHours)
+    public void addCompany(String Company,final int wagePerHour,final int numberOfDays,final int totalHours)
     {
-    CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(company,wagePerHour,numberOfDays,numberOfDays);
+    CompanyEmpWage CompanyEmpWage_Obj=new  CompanyEmpWage(Company,wagePerHour,numberOfDays,numberOfDays);
 	CompanyWageList.add(CompanyEmpWage_Obj);
     numOfCompanies++;
-    companyToEmpWageMap.put(company,CompanyEmpWage_Obj);
     }
     
-    private void computeEmpWage()
+    public void computeEmpWage()
     {
         for(int i=0;i<this.numOfCompanies;i++)
 		{	CompanyEmpWage CompanyEmpWage_Obj=CompanyWageList.get(i);
@@ -131,20 +130,20 @@ public class EmployeeWageComputation_UC_13
 			totalWage+=wage;
 			
 			total_dailyWage.put(wage,totalWage);
-							
+				
+			
+		
+			
+			
+				
 		}
 	
+		
 		return totalWage;
 		
 		
 	}
 	
-	public double getTotalWage(String company)
-	
-	{
-		return companyToEmpWageMap.get(company).gettotalWage();
-		
-	}
 	
   
 
@@ -159,7 +158,6 @@ public class EmployeeWageComputation_UC_13
 		e1.addCompany("Reliance",30,30,120);
 		e1.addCompany("Dmart",20,50,100);
 		e1.computeEmpWage();
-		System.out.println("The Total Wage for Dmart Company is "+e1.getTotalWage("Dmart"));
 
 	}
 }
